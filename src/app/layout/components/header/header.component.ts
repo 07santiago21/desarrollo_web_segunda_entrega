@@ -8,7 +8,7 @@ import { UserService } from '../../../auth/services/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
   standalone: true,
-  imports: [CommonModule,RouterModule] 
+  imports: [CommonModule, RouterModule]
 })
 export class HeaderComponent implements OnInit {
   menuVisible = false;
@@ -16,19 +16,16 @@ export class HeaderComponent implements OnInit {
   isOwner = false; 
   currentRoute: string = '';
 
-  constructor(private router: Router,private userService:UserService ) {}
+  constructor(private router: Router, private userService: UserService) {}
 
   ngOnInit() {
-    
     this.userService.loggedIn$.subscribe(loggedIn => {
       this.isLoggedIn = loggedIn; 
     });
 
-    // Suscribirse a cambios de isOwner
     this.userService.owner$.subscribe(owner => {
       this.isOwner = owner; 
     });
-
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -42,10 +39,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-
-    this.userService.logout()
+    this.userService.logout();
     this.router.navigate(['']);
-    
   }
-
 }

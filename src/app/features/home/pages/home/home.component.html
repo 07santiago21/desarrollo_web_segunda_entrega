@@ -1,39 +1,77 @@
 <main>
-    <section class="hero-header">
-      <div class="hero-container">
-        <div class="hero-row">
-          <div class="hero-content">
-            <h1 class="hero-title">Disfruta tus vacaciones con nosotros</h1>
-            <p class="hero-subtitle">
-              Bienvenidos a stayNest, la plataforma que hará realidad todos tus
-              viajes
-            </p>
-            <div class="hero-search-container">
-              <input
-                class="hero-search-input"
-                type="text"
-                placeholder="A dónde quieres ir?"
-              />
-              <a (click)="order_by_price()" class="hero-search-button">Buscar</a>
+  <section class="hero-header">
+    <div class="hero-container">
+      <div class="hero-row">
+        <div class="hero-content">
+          <h1 class="hero-title">Disfruta tus vacaciones con nosotros</h1>
+          <p class="hero-subtitle">
+            Bienvenidos a stayNest, la plataforma que hará realidad todos tus
+            viajes
+          </p>
+
+          <div class="hero-wrapper-everything">
+            <form [formGroup]="searchForm" class="hero-search-container">
+              <div class="search-box">
+                <div class="search-item">
+                  <label for="where">Ubicación</label>
+                  <i class="fa fa-map-marker search-icon"></i>
+                  <input
+                    id="where"
+                    type="text"
+                    placeholder="Explora destinos"
+                    formControlName="where"
+                  />
+                </div>
+  
+                <div class="search-item">
+                  <label for="precio">Precio deseado</label>
+                  <i class="fa fa-dollar-sign search-icon"></i>
+                  <input
+                    id="precio"
+                    type="number"
+                    placeholder="Elije tu precio"
+                    formControlName="precio"
+                  />
+                </div>
+  
+                <div class="search-item">
+                  <label for="guests">¿Quiénes van?</label>
+                  <i class="fa fa-user search-icon"></i>
+                  <input
+                    id="guests"
+                    type="number"
+                    placeholder="¿Cuántos?"
+                    formControlName="guests"
+                  />
+                </div>
+  
+                <div class="hero-search-button-container">
+                  <button type="submit" class="hero-search-button">Buscar</button>
+                </div>
+              </div>
+  
+            </form>
+            <div class="hero-search-button-container">
+              <button class="hero-search-button">Filtrar</button>
             </div>
+
           </div>
+          
+          
         </div>
       </div>
-    </section>
-  
-    <section id="rent">
-      
-      <div *ngFor="let hotel of hotels">
-        <app-hotel-component 
-          [photos]="hotel.photos" 
-          [title]="hotel.title" 
-          [address]="hotel.address" 
-          [price_per_night]="hotel.price_per_night"
-          [property_id]="hotel.property_id">
-        </app-hotel-component>
-      </div>
-      
-  
-    </section>
-  </main>
-  
+    </div>
+  </section>
+
+  <section id="rent">
+    <div *ngFor="let hotel of hotels">
+      <app-hotel-component 
+        [photos]="hotel.photos" 
+        [title]="hotel.title" 
+        [address]="hotel.address" 
+        [price_per_night]="hotel.price_per_night"
+        [property_id]="hotel.property_id">
+      </app-hotel-component>
+    </div>
+  </section>
+</main>
