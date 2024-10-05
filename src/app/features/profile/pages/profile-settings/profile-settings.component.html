@@ -1,6 +1,6 @@
 <div class="container">
     <div class="profile-info">
-      <img [src]="profile.img" width="90">
+      <img [src]="userSignal().profile_picture" width="90">
       <span>{{ userSignal().username }}</span>
       <span>{{userSignal().email }}</span>
     </div>
@@ -39,7 +39,7 @@
       
       
               <span>Profile picture:</span>
-              <input type="text" placeholder="profile picture"id="profile_picture" formControlName="profile_picture">
+              <input type="file" (change)="onFileSelected($event)">
             
             </div>
   
