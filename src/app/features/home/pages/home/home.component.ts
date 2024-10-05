@@ -19,13 +19,14 @@ import { HomeService } from '../../services/home.service';
 export class HomeComponent implements OnInit {
   menuVisible = false;
   hotels: Property[] = [];
+  filteredHotels: Property[] = [];
   searchForm: FormGroup;
 
   constructor(private homeService: HomeService) {
     this.searchForm = new FormGroup({
       where: new FormControl(''),
       precio: new FormControl(''),
-      numeroHabitaciones: new FormControl(''),
+      guests: new FormControl(''), // Ensure 'guests' control is defined here
     });
   }
 
@@ -36,13 +37,17 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (typeof window !== 'undefined') {
       this.hotels = this.homeService.get_hotels();
+      this.filteredHotels = this.hotels;
       console.log(this.hotels);
     }
   }
 
-  order_by_price(){
-    
-    this.hotels = this.homeService.order_by_price(this.hotels)
+  onSearch() {
+    const { where, precio, guests } = this.searchForm.value;
+    this.filteredHotels = this.homeService.filterHotels(where, precio, guests);
+  }
 
+  order_by_price() {
+    this.filteredHotels = this.homeService.order_by_price(this.filteredHotels);
   }
 }

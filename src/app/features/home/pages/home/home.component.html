@@ -10,7 +10,7 @@
           </p>
 
           <div class="hero-wrapper-everything">
-            <form [formGroup]="searchForm" class="hero-search-container">
+            <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="hero-search-container">
               <div class="search-box">
                 <div class="search-item">
                   <label for="where">Ubicación</label>
@@ -49,22 +49,18 @@
                   <button type="submit" class="hero-search-button">Buscar</button>
                 </div>
               </div>
-  
             </form>
             <div class="hero-search-button-container">
-              <button class="hero-search-button">Filtrar</button>
+              <button (click)="order_by_price()" class="hero-search-button">Filtrar</button>
             </div>
-
           </div>
-          
-          
         </div>
       </div>
     </div>
   </section>
 
   <section id="rent">
-    <div *ngFor="let hotel of hotels">
+    <div *ngFor="let hotel of filteredHotels">
       <app-hotel-component 
         [photos]="hotel.photos" 
         [title]="hotel.title" 
