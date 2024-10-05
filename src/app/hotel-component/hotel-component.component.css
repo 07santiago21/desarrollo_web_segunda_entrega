@@ -1,4 +1,3 @@
-/* Existing styles for the component */
 .component {
     border-radius: 10px;
     overflow: hidden;
@@ -42,7 +41,6 @@
     font-weight: bold;
     font-size: 16px;
 }
-
 
 .hotel-link {
     display: inline-block;

@@ -1,14 +1,14 @@
 <div class="component">
-    <div class="image-wrapper">
-      <img [src]="photos" alt="Descripción de la imagen" />
-    </div>
-    <div class="info">
-      <p>{{ title }}</p>
-      <p class="ubi">Ubicacion: {{ address }}</p>
-      <p class="price">{{ price_per_night }} COP por huésped</p>
-      
-      <a (click)="delete_property()" class="hotel-link">eliminar</a>
-    
+  <div class="image-wrapper">
+    <img [src]="photos" alt="Descripción de la imagen" />
+  </div>
+  <div class="info">
+    <p>{{ title }}</p>
+    <p class="ubi">Ubicacion: {{ address }}</p>
+    <p class="price">{{ price_per_night }} COP por huésped</p>
+    <div class="botones">
+      <a (click)="delete_property()" class="hotel-link delete-link">eliminar</a>
       <a [routerLink]="['/edit-property', property_id]" class="hotel-link">editar</a>
     </div>
+  </div>
 </div>

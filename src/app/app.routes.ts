@@ -9,7 +9,8 @@ import { AddPropertyComponent } from './features/properties/add-property/add-pro
 import { PropertyEditComponent } from './features/properties/property-edit/property-edit.component';
 import { DetailsComponent } from './features/properties/details/details.component';
 
-export const routes: Routes = [{ path: 'user', component: HomeComponent },
+export const routes: Routes = [
+    {path: 'user', component: HomeComponent },
     {path: '', component: IndexComponent},
     {path: 'sign-in', component: SignInComponent},
     {path: 'sign-up', component: SignUpComponent},

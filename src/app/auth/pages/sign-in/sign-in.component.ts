@@ -13,19 +13,16 @@ import Swal from 'sweetalert2';
 })
 export class SignInComponent {
   signInForm: FormGroup;
-  
 
-  constructor(private fb:FormBuilder, private router:Router, private userService:UserService){
+  constructor(private fb: FormBuilder, private router: Router, private userService: UserService) {
     this.signInForm = this.fb.group({
-      userName:['', [Validators.required, this.userService.usernameValidator]],
-      password:['', [Validators.required, this.userService.passwordValidator]]
-    })
+      userName: ['', [Validators.required, this.userService.usernameValidator]],
+      password: ['', [Validators.required, this.userService.passwordValidator]]
+    });
   }
 
-  onLogin(){
-
-    
-    if (!this.signInForm.valid){
+  onLogin() {
+    if (!this.signInForm.valid) {
       Swal.fire({
         title: 'Ingreso',
         text: 'Debe diligenciar todos los campos',
@@ -34,29 +31,26 @@ export class SignInComponent {
       return;
     }
 
-    let userName = this.signInForm.value.userName||'';
-    let password = this.signInForm.value.password||'';
+    let userName = this.signInForm.value.userName || '';
+    let password = this.signInForm.value.password || '';
     let response = this.userService.login(userName, password);
 
-    if (response.success){
-      if (response.is_owner){
+    if (response.success) {
+      if (response.is_owner) {
         this.router.navigateByUrl('/owner-filtering');
-      }
-      else{
-
+      } else {
         this.router.navigateByUrl('/user');
       }
-
-    }else{
-
-
+    } else {
       Swal.fire({
         title: 'Ingreso',
         text: response.message,
         icon: 'error'
       });
     }
-    
   }
 
+  navigateToSignUp() {
+    this.router.navigate(['/sign-up']); 
+  }
 }

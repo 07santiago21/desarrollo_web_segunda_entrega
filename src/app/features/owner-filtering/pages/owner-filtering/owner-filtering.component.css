@@ -1,54 +1,90 @@
+/* Main container styling */
 .main-container {
-    display: flex; /* Use flexbox layout */
-    flex-direction: row; /* Arrange children in a row */
-    justify-content: space-between; /* Create space between left and right side */
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-between; 
     padding: 20px;
-    background-color: #fff; /* Optional background color */
-    width: 100%; /* Full width */
+    background-color: #f9f9f9; 
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%; 
+    margin-bottom: 20px; 
 }
 
+/* Left side styling */
 .left-side {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center; 
 }
 
+/* Right side styling */
 .right-side {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    gap: 10px; /* Spacing between label, input, and button */
+    align-items: center;
+    gap: 10px; 
 }
 
+/* Primary button styling */
 .btn-primary {
     background-color: #3498db;
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
-    border: 1px solid #2980b9;
+    border: none; /* Remove border */
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s; /* Add transition for animation */
+    transition: background-color 0.3s, transform 0.3s; 
+    font-size: 14px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    text-decoration: none; 
+    display: inline-block;
+    text-align: center; 
 }
 
 .btn-primary:hover {
-    background-color: #2980b9; /* Change background color on hover */
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    background-color: #2980b9; 
+    transform: scale(1.05); 
 }
 
 .btn-primary:active {
-    transform: scale(0.95); /* Slightly shrink the button on click */
-    background-color: #1c6ea4; /* Darker background color on click */
+    transform: scale(0.95); 
+    background-color: #1c6ea4; 
 }
 
+/* Input styling */
 .input-buscar-hotel {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #3498db;
-    width: 200px; /* Fixed width for the input */
+    width: 200px; 
+    font-size: 14px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    transition: border-color 0.3s; 
 }
 
+.input-buscar-hotel:focus {
+    border-color: #2980b9; 
+    outline: none; 
+}
+
+/* Label styling */
 .right-side label {
     margin-right: 10px;
     font-size: 14px;
-    align-self: center; /* Align label vertically in the middle */
+    align-self: center; 
+    color: #333; 
+}
+
+/* Grid layout for hotel components */
+#rent {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px; 
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
