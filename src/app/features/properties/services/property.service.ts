@@ -9,7 +9,7 @@ import { PropertyResponse } from '../interfaces/property_response.interface';
 })
 export class PropertyService {
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   addProperty(property: Property): PropertyResponse {
     let propertiesArray = localStorage.getItem('properties');
@@ -33,21 +33,6 @@ export class PropertyService {
     return property
   }
 
-  updateProperty(id: string, updatedProperty: Property): Observable<PropertyResponse> {
-    let propertiesArray = localStorage.getItem('properties');
-    let properties: Array<Property> = propertiesArray ? JSON.parse(propertiesArray) : [];
-    let index = properties.findIndex(prop => prop.property_id === +id);
-
-    if (index !== -1) {
-      properties[index] = { ...properties[index], ...updatedProperty };
-      localStorage.setItem('properties', JSON.stringify(properties));
-      return of({ success: true });
-    } else {
-      return of({ success: false });
-    }
-  }
-
-
   updateProperty_(property:any,update_property: any):PropertyResponse{
     for (const key in update_property) {
       if (update_property[key] !== "") {
@@ -64,13 +49,7 @@ export class PropertyService {
     success: true
   };
 
-
-  
-
 }
-
-
-
 
   getUser_id(){
     const userSrt = localStorage.getItem('loggedUser');

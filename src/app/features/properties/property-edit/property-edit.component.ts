@@ -53,7 +53,6 @@ export class PropertyEditComponent implements OnInit {
     const update_property = this.editPropertyForm.value;
     if (this.id) {
       const property = this.propertyService.getPropertyById(this.id);
-
       if (!property) {
         Swal.fire({
           text: 'Propiedad no encontrada',
@@ -61,7 +60,6 @@ export class PropertyEditComponent implements OnInit {
         });
         return;
       }
-
       let imageUrl = property.photos;
       if (this.selectedFile) {
         const uploadResult = await this.uploadImage();
@@ -76,7 +74,7 @@ export class PropertyEditComponent implements OnInit {
         }
       }
 
-      const updatedProperty = { photos: imageUrl, ...update_property };
+      const updatedProperty = {...update_property, photos: imageUrl};
       const response = this.propertyService.updateProperty_(property, updatedProperty);
 
       if (response.success) {
