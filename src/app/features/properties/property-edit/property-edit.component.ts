@@ -84,7 +84,7 @@ export class PropertyEditComponent implements OnInit {
           text: 'Propiedad editada',
           icon: 'success'
         }).then(() => {
-          this.router.navigate(['/owner-filtering']); // Redirect to owner filtering
+          this.router.navigate(['/owner-filtering']); 
         });
       } else {
         Swal.fire({
@@ -125,6 +125,6 @@ export class PropertyEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['/owner-filtering']); // Redirect to owner filtering
+    this.router.navigate(['/owner-filtering']); 
   }
 }

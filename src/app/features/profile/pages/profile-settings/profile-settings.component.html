@@ -8,13 +8,11 @@
     <form [formGroup]="editProfileForm">
       <div class="form-section">
         <div class="header">
-          <button class="back-to-home">
+          <button class="back-to-home"(click)="navigateToHome()">
             <i class="fa fa-long-arrow-left"></i>
             Back to home
           </button>
-          <button class="edit-profile">
-            Edit Profile
-          </button>
+          
         </div>
   
   

@@ -9,41 +9,37 @@ import { ProfileService } from '../../services/profile.service';
 import Swal from 'sweetalert2';
 import { HttpClientModule } from '@angular/common/http';
 
-
-
-
-
 @Component({
   selector: 'app-profile-settings',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, RouterModule,HttpClientModule],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule],
   providers: [ProfileService],
   templateUrl: './profile-settings.component.html',
   styleUrls: ['./profile-settings.component.css']
 })
-
 export class ProfileSettingsComponent {
+  editProfileForm: FormGroup;
+  userSignal!: Signal<SignalUser>;
+  profileServices;
 
-
-  editProfileForm:FormGroup;
-  userSignal!: Signal<SignalUser>
-  profileServices
-
-  constructor(private fb: FormBuilder, private router: Router,private userService: UserService,private profileService:ProfileService) {
-
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private userService: UserService,
+    private profileService: ProfileService
+  ) {
     this.userSignal = this.userService.userSignal;
-    this.profileServices = this.profileService
-  
+    this.profileServices = this.profileService;
 
     this.editProfileForm = this.fb.group({
-    userName: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
-    email: [''],
-    password: [''],
-    bio: [''],
-    profile_picture: [''],
-  });
+      userName: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
+      email: [''],
+      password: [''],
+      bio: [''],
+      profile_picture: ['']
+    });
+  }
 
-}
   profile = {
     img: 'path/to/image.jpg',
     firstName: 'John',
@@ -55,21 +51,17 @@ export class ProfileSettingsComponent {
     console.log('Profile saved', this.profile);
   }
 
+  onEditProfile() {
+    let userName = this.editProfileForm.value.userName || '';
+    let password = this.editProfileForm.value.password || '';
+    let email = this.editProfileForm.value.email || '';
+    let bio = this.editProfileForm.value.bio || '';
+    let profile_picture = this.editProfileForm.value.profile_picture || '';
 
-  onEditProfile(){
+    var user_id = this.userSignal().user_id;
+    if (user_id) {
+      const response = this.profileServices.updateUser(user_id, userName, password, email, bio, profile_picture);
 
-    let userName = this.editProfileForm.value.userName||'';
-    let password = this.editProfileForm.value.password||''; 
-    let email = this.editProfileForm.value.email||'';
-    let bio = this.editProfileForm.value.bio||'';
-    let profile_picture = this.editProfileForm.value.profile_picture||'';
-
-
-
-    var user_id = this.userSignal().user_id
-    if (user_id){
-      const response = this.profileServices.updateUser(user_id,userName,password,email,bio,profile_picture)
-      
       if (response) {
         Swal.fire({
           text: 'perfil editado',
@@ -78,20 +70,11 @@ export class ProfileSettingsComponent {
       }
     }
 
-
-    
-
-
-
-    console.log(userName,password,email,bio,profile_picture)
-    console.log(this.userSignal())
+    console.log(userName, password, email, bio, profile_picture);
+    console.log(this.userSignal());
   }
 
-
-
-  
-  
-
-
-
+  navigateToHome() {
+    this.router.navigate(['']); // Adjust the route as necessary
+  }
 }
