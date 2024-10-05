@@ -1,0 +1,75 @@
+<div class="everything">
+    <form [formGroup]="editPropertyForm" (ngSubmit)="onSubmit()" class="property-form">
+        <div class="image-upload">
+            <label for="imageInput">
+                <span class="plus-icon">+</span>
+                <input type="file" id="imageInput" (change)="onFileSelected($event)" accept="image/*" />
+            </label>
+        </div>
+  
+        <div class="form-group">
+            <label for="title">Título de la propiedad:</label>
+            <input type="text" id="title" formControlName="title" placeholder="Título de la propiedad" required />
+            <div *ngIf="editPropertyForm.get('title')?.invalid && editPropertyForm.get('title')?.touched" class="error">El título es requerido.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="description">Descripción de la propiedad:</label>
+            <textarea id="description" formControlName="description" placeholder="Descripción de la propiedad" required></textarea>
+            <div *ngIf="editPropertyForm.get('description')?.invalid && editPropertyForm.get('description')?.touched" class="error">La descripción es requerida.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="address">Dirección de la propiedad:</label>
+            <input type="text" id="address" formControlName="address" placeholder="Dirección de la propiedad" required />
+            <div *ngIf="editPropertyForm.get('address')?.invalid && editPropertyForm.get('address')?.touched" class="error">La dirección es requerida.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="latitude">Latitud de la propiedad:</label>
+            <input type="text" id="latitude" formControlName="latitude" placeholder="Latitud de la propiedad" required />
+            <div *ngIf="editPropertyForm.get('latitude')?.invalid && editPropertyForm.get('latitude')?.touched" class="error">La latitud es requerida.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="longitude">Longitud de la propiedad:</label>
+            <input type="text" id="longitude" formControlName="longitude" placeholder="Longitud de la propiedad" required />
+            <div *ngIf="editPropertyForm.get('longitude')?.invalid && editPropertyForm.get('longitude')?.touched" class="error">La longitud es requerida.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="price_per_night">Precio por noche:</label>
+            <input type="text" id="price_per_night" formControlName="price_per_night" placeholder="Precio por noche" required />
+            <div *ngIf="editPropertyForm.get('price_per_night')?.invalid && editPropertyForm.get('price_per_night')?.touched" class="error">El precio por noche es requerido.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="rooms">Número de habitaciones:</label>
+            <input type="text" id="rooms" formControlName="rooms" placeholder="Número de habitaciones" required />
+            <div *ngIf="editPropertyForm.get('rooms')?.invalid && editPropertyForm.get('rooms')?.touched" class="error">El número de habitaciones es requerido.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="bathrooms">Número de baños:</label>
+            <input type="text" id="bathrooms" formControlName="bathrooms" placeholder="Número de baños" required />
+            <div *ngIf="editPropertyForm.get('bathrooms')?.invalid && editPropertyForm.get('bathrooms')?.touched" class="error">El número de baños es requerido.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="max_capacity">Capacidad máxima de huéspedes:</label>
+            <input type="text" id="max_capacity" formControlName="max_capacity" placeholder="Capacidad máxima de huéspedes" required />
+            <div *ngIf="editPropertyForm.get('max_capacity')?.invalid && editPropertyForm.get('max_capacity')?.touched" class="error">La capacidad máxima de huéspedes es requerida.</div>
+        </div>
+  
+        <div class="form-group">
+            <label for="photos">Fotos:</label>
+            <input type="text" id="photos" formControlName="photos" placeholder="Fotos" required />
+            <div *ngIf="editPropertyForm.get('photos')?.invalid && editPropertyForm.get('photos')?.touched" class="error">Las fotos son requeridas.</div>
+        </div>
+  
+        <div class="button-group">
+            <button type="reset" class="btn btn-secondary">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Actualizar Información</button>
+        </div>
+    </form>
+</div>

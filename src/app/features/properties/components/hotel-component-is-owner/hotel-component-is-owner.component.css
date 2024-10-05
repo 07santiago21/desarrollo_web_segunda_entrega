@@ -1,0 +1,44 @@
+.component {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Fixed width for grid items */
+    height: 400px; /* Fixed height for grid items */
+    padding: 20px;
+    margin: 15px;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 60%; /* Adjust height as needed */
+    overflow: hidden;
+    padding: 20px;
+    margin: 10px;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info {
+    padding: 10px; 
+    
+}
+
+.info p {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.info .ubi {
+    color: #777;
+    font-size: 14px;
+}
+
+.info .price {
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}

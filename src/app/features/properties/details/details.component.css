@@ -1,0 +1,63 @@
+/* Container for the details */
+
+.everything {
+    background: url('https://images.pexels.com/photos/1668246/pexels-photo-1668246.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .details-container {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Translucent background */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 45%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  /* General text styles */
+  .details-container p {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1rem;
+    align-self: center;
+  }
+  
+  /* Title styles */
+  .details-container h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #01020273;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Image styles */
+  .details-container img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+  }
+  
+  /* Flexbox for property details */
+  .details-container .property-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* Bold labels for property details */
+  .details-container .property-info p span {
+    font-weight: bold;
+  }

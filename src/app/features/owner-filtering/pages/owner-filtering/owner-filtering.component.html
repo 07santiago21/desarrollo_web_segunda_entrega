@@ -1,0 +1,29 @@
+<div class="main-container">
+    <div class="left-side">
+        <a [routerLink]="['/add-property']" class="btn-primary btn-create">crear propiedad</a>
+    </div>
+    <div class="right-side">
+        <label for="search">busca tus propiedades:</label>
+        <input class="input-buscar-hotel" type="text" placeholder="buscar" />
+        <button class="btn-primary btn-filter">filrar</button>
+    </div>
+
+
+    
+</div>
+
+
+<section id="rent">
+    
+    <div *ngFor="let hotel of hotels">
+      <app-hotel-component-is-owner 
+        [photos]="hotel.photos" 
+        [title]="hotel.title" 
+        [address]="hotel.address" 
+        [price_per_night]="hotel.price_per_night"
+        [property_id]="hotel.property_id">
+      </app-hotel-component-is-owner>
+    </div>
+    
+
+  </section>

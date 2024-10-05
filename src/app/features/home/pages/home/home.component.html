@@ -1,0 +1,39 @@
+<main>
+    <section class="hero-header">
+      <div class="hero-container">
+        <div class="hero-row">
+          <div class="hero-content">
+            <h1 class="hero-title">Disfruta tus vacaciones con nosotros</h1>
+            <p class="hero-subtitle">
+              Bienvenidos a stayNest, la plataforma que hará realidad todos tus
+              viajes
+            </p>
+            <div class="hero-search-container">
+              <input
+                class="hero-search-input"
+                type="text"
+                placeholder="A dónde quieres ir?"
+              />
+              <a (click)="order_by_price()" class="hero-search-button">Buscar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section id="rent">
+      
+      <div *ngFor="let hotel of hotels">
+        <app-hotel-component 
+          [photos]="hotel.photos" 
+          [title]="hotel.title" 
+          [address]="hotel.address" 
+          [price_per_night]="hotel.price_per_night"
+          [property_id]="hotel.property_id">
+        </app-hotel-component>
+      </div>
+      
+  
+    </section>
+  </main>
+  

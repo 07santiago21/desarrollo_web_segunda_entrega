@@ -1,0 +1,19 @@
+<div class="everything">
+    <div class="details-container">
+      
+      <div *ngIf="property" class="property-info">
+        <h1>{{ property!.title }}</h1>
+        <p>{{ property!.description }}</p>
+        <p>Ubicación: {{ property!.address }}</p>
+        <p>Precio por noche: {{ property!.price_per_night }} COP</p>
+        <p>Número de habitaciones: {{ property!.rooms }}</p>
+        <p>Número de baños: {{ property!.bathrooms }}</p>
+        <p>Capacidad máxima: {{ property!.max_capacity }}</p>
+        <p>Latitud: {{ property!.latitude }}</p>
+        <p>Longitud: {{ property!.longitude }}</p>
+        <div>
+          <img [src]="property!.photos" alt="Imagen de la propiedad" />
+        </div>
+      </div>
+    </div>
+  </div>

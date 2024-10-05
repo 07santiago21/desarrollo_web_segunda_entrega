@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="image-section">
+      <img
+        src="https://news.airbnb.com/wp-content/uploads/sites/4/2019/06/PJM020719Q202_Luxe_WanakaNZ_LivingRoom_0264-LightOn_R1.jpg?fit=2500%2C1666"
+        alt="Imagen de fondo"
+      />
+    </div>
+  
+    <div class="session">
+      <h2>INICIO SESIÓN</h2>
+      <p>Por favor complete sus datos para ingresar</p>
+      <form [formGroup]="signInForm">
+        <label for="username">Nombre de usuario</label>
+        <input type="username" id="username" formControlName="userName" placeholder="Nombre de usuario" />
+  
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" formControlName="password" placeholder="••••••••••••••••••" />
+      </form>
+  
+      <div class="a-container">
+  
+        <a (click)="onLogin()" class="primary">Ingresar</a>
+        <a class="secondary">Registrarse</a>
+        
+      </div>
+    </div>
+  </div>
+  

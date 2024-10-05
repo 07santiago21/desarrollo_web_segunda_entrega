@@ -1,0 +1,174 @@
+/* Container Styles */
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 4rem;
+    padding: 3rem;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background: url('https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-size: cover; /* Cover the entire area */
+    background-position: center; /* Center the image */
+  }
+  
+  /* Profile Info Styles */
+  .profile-info {
+    margin-right: 16rem;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 0;
+    background-color: rgba(255, 255, 255, 0.8); /* White with opacity for translucency */
+    border-radius: 2rem; /* Larger border radius for a softer look */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Soft shadow */
+    transition: box-shadow 0.3s ease; /* Add transition for hover effect */
+  }
+  
+  .profile-info:hover {
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Slight hover effect */
+  }
+  
+  .profile-info img {
+    border-radius: 50%;
+    margin-top: 1.5rem;
+    width: 120px; /* Larger, sharper image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow for focus */
+    transition: transform 0.3s ease; /* Animation for hover effect */
+  }
+  
+  .profile-info img:hover {
+    transform: scale(1.05); /* Slight zoom-in on hover */
+  }
+  
+  .profile-info span {
+    margin-top: 1rem;
+    font-size: 1.4rem; /* Increase text size for emphasis */
+    font-weight: 700; /* Bold for stronger readability */
+    color: #2c3e50; /* Darker color for a modern, clean look */
+  }
+  
+  .profile-info .email, .profile-info .location {
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    color: #7f8c8d; /* Subtle gray for secondary text */
+  }
+  
+  /* Form Section Styles */
+  .form-section {
+    width: 75%; /* Match the width of .profile-info */
+    margin-top: 2rem;
+    background-color: rgba(255, 255, 255, 0.8); /* White with opacity for translucency */
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .form-section .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #ecf0f1; /* Subtle separator */
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }
+  
+  /* Go Back to Home Button Styles */
+  .form-section .back-to-home {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #3498db; /* Lighter blue for a refreshing look */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease; /* Add transition for color and transform */
+  }
+  
+  .form-section .back-to-home:hover {
+    color: #2980b9; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight zoom-in on hover */
+  }
+  
+  .form-section .back-to-home i {
+    margin-right: 0.5rem;
+    transition: transform 0.3s ease; /* Add transition for icon transform */
+  }
+  
+  .form-section .back-to-home:hover i {
+    transform: translateX(-5px); /* Move icon slightly to the left on hover */
+  }
+  
+  /* Edit Profile Button Styles */
+  .form-section .edit-profile {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50; /* Darker, elegant color */
+    background-color: #ecf0f1; /* Light gray background */
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Add transition for background, color, and transform */
+  }
+  
+  .form-section .edit-profile:hover {
+    background-color: #bdc3c7; /* Darker gray on hover */
+    color: #2c3e50; /* Keep text color the same */
+    transform: scale(1.05); /* Slight zoom-in on hover */
+  }
+  
+  /* Form Group Styles */
+  .form-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 1rem; /* Gap between grid items */
+    margin-bottom: 2rem; /* Space between form groups */
+  }
+  
+  .form-group span {
+    grid-column: span 2; /* Span both columns */
+    font-size: 1rem;
+    color: #7f8c8d; /* Subtle gray for secondary text */
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1rem;
+    border: 2px solid #ecf0f1; /* Softer border with better contrast */
+    border-radius: 0.75rem; /* More rounded for modern look */
+    background-color: #f9f9f9; /* Light background for input fields */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #3498db; /* Light blue border on focus */
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.2); /* Soft focus shadow */
+    outline: none;
+  }
+  
+  /* Save Button Styles */
+  .save-btn {
+    grid-column-start: 2; /* Start in the second column */
+    text-align: right;
+  }
+  
+  .save-btn button {
+    margin-right: 12rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #3498db; /* Flat, stylish blue */
+    color: white;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .save-btn button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    box-shadow: 0 4px 10px rgba(41, 128, 185, 0.3); /* Add shadow on hover */
+  }

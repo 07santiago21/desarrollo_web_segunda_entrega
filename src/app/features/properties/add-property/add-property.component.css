@@ -1,0 +1,101 @@
+.property-form {
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 50%;
+    
+}
+
+/* Title Styles */
+.everything p {
+    font-size: 2rem; /* Larger font size */
+    font-weight: bold; /* Bold text */
+    color: #01fff273; 
+    margin-bottom: 2rem; /* Space below the title */
+    text-align: center; /* Centered text */
+    text-transform: uppercase; /* Uppercase text for a modern look */
+    letter-spacing: 1px; /* Slightly increased letter spacing */
+  }
+
+
+
+.everything {
+    
+    margin-top: 4rem;
+    background: url('https://images.unsplash.com/photo-1639580926953-1bbfdbc61591?q=80&w=2105&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+    background-size: cover;
+    border-radius: 1rem; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+    padding: 3rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+  }
+
+.image-upload {
+    grid-column: 1 / -1; /* Span the image upload across both columns */
+    border: 2px dashed #3498db;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 9px;
+}
+
+.form-group input,
+.form-group textarea {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.button-group {
+    grid-column: 1 / -1; /* Span the button group across both columns */
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
