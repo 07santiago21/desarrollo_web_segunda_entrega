@@ -1,12 +1,14 @@
 import { SupabaseService } from './../services/supabase.service';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { PropertyService } from '../services/property.service'; 
 import { v4 as uuidv4 } from 'uuid'; // Import UUID
+import { Property } from '../interfaces/property.interface'; // Import Property interface
+import { PropertyResponse } from '../interfaces/property_response.interface'; // Import PropertyResponse interface
 
 @Component({
   selector: 'app-property-edit',
@@ -25,44 +27,53 @@ export class PropertyEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private route: ActivatedRoute, 
-    private propertyService: PropertyService, 
+    @Inject(PropertyService) private propertyService: PropertyService, 
     private supabaseService: SupabaseService,
     private router: Router // Inject Router
   ) {
     this.editPropertyForm = this.fb.group({
-      title: ['', []],
-      description: ['', []],
-      address: ['', []],
-      latitude: ['', []],
-      longitude: ['', []], 
-      price_per_night: ['', []],
-      rooms: ['', []],
-      bathrooms: ['', []],
-      max_capacity: ['', []],
-      photos: ['', []]
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      address: ['', [Validators.required]],
+      latitude: ['', [Validators.required]],
+      longitude: ['', [Validators.required]], 
+      price_per_night: ['', [Validators.required]],
+      rooms: ['', [Validators.required]],
+      bathrooms: ['', [Validators.required]],
+      max_capacity: ['', [Validators.required]],
+      photos: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
+      if (this.id) {
+        this.propertyService.getPropertyById(this.id).subscribe(
+          (property: Property) => {
+            this.editPropertyForm.patchValue(property);
+            this.imagePreview = property.photos;
+          },
+          (error) => {
+            console.error('Error fetching property:', error);
+          }
+        );
+      }
     });
   }
 
   async onSubmit() {
+    if (!this.editPropertyForm.valid) {
+      Swal.fire({
+        text: 'Debe diligenciar todos los campos',
+        icon: 'error'
+      });
+      return;
+    }
+
     const update_property = this.editPropertyForm.value;
     if (this.id) {
-      const property = this.propertyService.getPropertyById(this.id);
-
-      if (!property) {
-        Swal.fire({
-          text: 'Propiedad no encontrada',
-          icon: 'error'
-        });
-        return;
-      }
-
-      let imageUrl = property.photos;
+      let imageUrl = this.imagePreview;
       if (this.selectedFile) {
         const uploadResult = await this.uploadImage();
         if (uploadResult) {
@@ -77,21 +88,30 @@ export class PropertyEditComponent implements OnInit {
       }
 
       const updatedProperty = { photos: imageUrl, ...update_property };
-      const response = this.propertyService.updateProperty_(property, updatedProperty);
-
-      if (response.success) {
-        Swal.fire({
-          text: 'Propiedad editada',
-          icon: 'success'
-        }).then(() => {
-          this.router.navigate(['/owner-filtering']); 
-        });
-      } else {
-        Swal.fire({
-          text: 'Error al editar',
-          icon: 'error'
-        });
-      }
+      this.propertyService.updateProperty(this.id, updatedProperty).subscribe(
+        (response: PropertyResponse) => {
+          if (response.success) {
+            Swal.fire({
+              text: 'Propiedad editada',
+              icon: 'success'
+            }).then(() => {
+              this.router.navigate(['/owner-filtering']); 
+            });
+          } else {
+            Swal.fire({
+              text: 'Error al editar',
+              icon: 'error'
+            });
+          }
+        },
+        (error) => {
+          Swal.fire({
+            text: 'Error al editar',
+            icon: 'error'
+          });
+          console.error('Error updating property:', error);
+        }
+      );
     }
   }
 

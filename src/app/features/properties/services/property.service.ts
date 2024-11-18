@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Property } from '../interfaces/property.interface';
 import { PropertyResponse } from '../interfaces/property_response.interface';
 
@@ -8,75 +8,34 @@ import { PropertyResponse } from '../interfaces/property_response.interface';
   providedIn: 'root'
 })
 export class PropertyService {
+  private apiUrl = 'http://localhost:3000/properties'; // api de santos
 
   constructor(private http: HttpClient) {}
 
-  addProperty(property: Property): PropertyResponse {
-    let propertiesArray = localStorage.getItem('properties');
-    let properties: Array<Property> = propertiesArray ? JSON.parse(propertiesArray) : [];
-
-    let lastPropertyId = properties.length > 0 ? Math.max(...properties.map((prop: Property) => prop.property_id)) + 1 : 1;
-
-    property.property_id = lastPropertyId;
-
-    properties.push(property);
-    localStorage.setItem('properties', JSON.stringify(properties));
-    return {
-      success: true
-    };
+  addProperty(property: Property): Observable<PropertyResponse> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<PropertyResponse>(`${this.apiUrl}`, property, { headers });
   }
 
-  getPropertyById(id: string): Property|undefined {
-    let propertiesArray = localStorage.getItem('properties');
-    let properties: Array<Property> = propertiesArray ? JSON.parse(propertiesArray) : [];
-    let property = properties.find(prop => prop.property_id === +id);
-    return property
+  getPropertyById(id: string): Observable<Property> {
+    return this.http.get<Property>(`${this.apiUrl}/${id}`);
   }
 
   updateProperty(id: string, updatedProperty: Property): Observable<PropertyResponse> {
-    let propertiesArray = localStorage.getItem('properties');
-    let properties: Array<Property> = propertiesArray ? JSON.parse(propertiesArray) : [];
-    let index = properties.findIndex(prop => prop.property_id === +id);
-
-    if (index !== -1) {
-      properties[index] = { ...properties[index], ...updatedProperty };
-      localStorage.setItem('properties', JSON.stringify(properties));
-      return of({ success: true });
-    } else {
-      return of({ success: false });
-    }
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.patch<PropertyResponse>(`${this.apiUrl}/${id}`, updatedProperty, { headers });
   }
 
-
-  updateProperty_(property:any,update_property: any):PropertyResponse{
-    for (const key in update_property) {
-      if (update_property[key] !== "") {
-          property[key] = update_property[key];
-      }
-
-      let properties: Array<Property> = JSON.parse(localStorage.getItem("properties")|| "[]")
-      const propertyIndex = properties.findIndex(property_ => property_.property_id === property.property_id);
-      properties[propertyIndex] = property
-      localStorage.setItem("properties",JSON.stringify(properties))
-
+  deleteProperty(id: number): Observable<PropertyResponse> {
+    return this.http.delete<PropertyResponse>(`${this.apiUrl}/${id}`);
   }
-  return {
-    success: true
-  };
 
-
-  
-
-}
-
-
-
-
-  getUser_id(){
-    const userSrt = localStorage.getItem('loggedUser');
-    if(userSrt){
-      const user = JSON.parse(userSrt).user_id;
-      return user
+  getUser_id(): string | null {
+    const userStr = localStorage.getItem('loggedUser');
+    if (userStr) {
+      const user = JSON.parse(userStr).user_id;
+      return user;
     }
+    return null;
   }
 }

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Property } from '../../properties/interfaces/property.interface';
 import { User } from '../../../auth/interfaces/user';
 
@@ -6,19 +8,22 @@ import { User } from '../../../auth/interfaces/user';
   providedIn: 'root'
 })
 export class HomeService {
-
+  private apiUrl = 'http://localhost:3000/properties'; // api
   order_by_asc = false;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  get_hotels(): Property[] {
-    let properties: Array<Property> = JSON.parse(localStorage.getItem("properties") || "[]");
-    return properties;
+  get_hotels(): Observable<Property[]> {
+    return this.http.get<Property[]>(this.apiUrl);
   }
 
-  get_id_user(): string {
-    let user: User = JSON.parse(localStorage.getItem("loggedUser") || "{}");
-    return user.user_id.toString();
+  get_id_user(): string | null {
+    const userStr = localStorage.getItem('loggedUser');
+    if (userStr) {
+      const user: User = JSON.parse(userStr);
+      return user.user_id.toString();
+    }
+    return null;
   }
 
   order_by_price(properties: Array<Property>): Property[] {
@@ -33,13 +38,18 @@ export class HomeService {
     });
   }
 
-  filterHotels(where: string, precio: number, guests: number): Property[] {
-    const hotels: Property[] = this.get_hotels();
-    return hotels.filter(hotel => {
-      const matchesLocation = where ? hotel.address.toLowerCase().includes(where.toLowerCase()) : true;
-      const matchesPrice = precio ? hotel.price_per_night <= precio : true;
-      const matchesGuests = guests ? hotel.max_capacity >= guests : true;
-      return matchesLocation && matchesPrice && matchesGuests;
-    });
+  filterHotels(where: string, precio: number, guests: number): Observable<Property[]> {
+    let params = new HttpParams();
+    if (where) {
+      params = params.set('where', where);
+    }
+    if (precio) {
+      params = params.set('precio', precio.toString());
+    }
+    if (guests) {
+      params = params.set('guests', guests.toString());
+    }
+
+    return this.http.get<Property[]>(`${this.apiUrl}/filter`, { params });
   }
 }

@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
     this.searchForm = new FormGroup({
       where: new FormControl(''),
       precio: new FormControl(''),
-      guests: new FormControl(''), // Ensure 'guests' control is defined here
+      guests: new FormControl(''), 
     });
   }
 
@@ -36,15 +36,19 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     if (typeof window !== 'undefined') {
-      this.hotels = this.homeService.get_hotels();
-      this.filteredHotels = this.hotels;
-      console.log(this.hotels);
+      this.homeService.get_hotels().subscribe((hotels: Property[]) => {
+        this.hotels = hotels;
+        this.filteredHotels = hotels;
+        console.log(this.hotels);
+      });
     }
   }
 
   onSearch() {
     const { where, precio, guests } = this.searchForm.value;
-    this.filteredHotels = this.homeService.filterHotels(where, precio, guests);
+    this.homeService.filterHotels(where, precio, guests).subscribe((filteredHotels: Property[]) => {
+      this.filteredHotels = filteredHotels;
+    });
   }
 
   order_by_price() {

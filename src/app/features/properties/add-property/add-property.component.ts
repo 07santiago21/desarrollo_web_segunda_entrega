@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; 
 import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 import Swal from 'sweetalert2';
@@ -9,7 +9,7 @@ import { SupabaseService } from '../services/supabase.service';
 @Component({
   selector: 'app-add-property',
   standalone: true,
-  imports: [FormsModule, CommonModule, ReactiveFormsModule, HttpClientModule], 
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule], // Import ReactiveFormsModule
   templateUrl: './add-property.component.html',
   styleUrls: ['./add-property.component.css'],
   providers: [PropertyService] 
@@ -18,9 +18,12 @@ export class AddPropertyComponent {
   addPropertyForm: FormGroup;
   imagePreview: string | ArrayBuffer | null = null;
 
-  constructor(private fb: FormBuilder, private propertyService: PropertyService,private supabaseService: SupabaseService) {
+  constructor(
+    private fb: FormBuilder,
+    private propertyService: PropertyService,
+    private supabaseService: SupabaseService
+  ) {
     this.addPropertyForm = this.fb.group({
-      
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       address: ['', [Validators.required]],
@@ -44,17 +47,22 @@ export class AddPropertyComponent {
     }
 
     let property = this.addPropertyForm.value;
-    const user_id = this.propertyService.getUser_id()
-    property = {user_id ,...property}
+    const user_id = this.propertyService.getUser_id();
+    property = { user_id, ...property };
 
-    let response = this.propertyService.addProperty(property);
-
-    if (response) {
-      Swal.fire({
-        text: 'Propiedad añadida',
-        icon: 'success'
-      });
-    }
+    this.propertyService.addProperty(property).subscribe(response => {
+      if (response.success) {
+        Swal.fire({
+          text: 'Propiedad añadida',
+          icon: 'success'
+        });
+      } else {
+        Swal.fire({
+          text: 'No se pudo añadir la propiedad',
+          icon: 'error'
+        });
+      }
+    });
   }
 
   onFileSelected(event: Event) {

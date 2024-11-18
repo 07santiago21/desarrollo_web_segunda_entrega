@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import FormsModule
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../../../../auth/services/user.service';
@@ -60,14 +60,28 @@ export class ProfileSettingsComponent {
 
     var user_id = this.userSignal().user_id;
     if (user_id) {
-      const response = this.profileServices.updateUser(user_id, userName, password, email, bio, profile_picture);
-
-      if (response) {
-        Swal.fire({
-          text: 'perfil editado',
-          icon: 'success'
-        });
-      }
+      this.profileServices.updateUser(user_id, userName, password, email, bio, profile_picture).subscribe(
+        (response) => {
+          if (response.success) {
+            Swal.fire({
+              text: 'Perfil editado',
+              icon: 'success'
+            });
+          } else {
+            Swal.fire({
+              text: 'Error al editar el perfil',
+              icon: 'error'
+            });
+          }
+        },
+        (error) => {
+          Swal.fire({
+            text: 'Error al editar el perfil',
+            icon: 'error'
+          });
+          console.error('Error updating profile:', error);
+        }
+      );
     }
 
     console.log(userName, password, email, bio, profile_picture);
@@ -75,6 +89,6 @@ export class ProfileSettingsComponent {
   }
 
   navigateToHome() {
-    this.router.navigate(['']); // Adjust the route as necessary
+    this.router.navigate(['']); 
   }
 }
