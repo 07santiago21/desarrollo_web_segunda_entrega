@@ -6,8 +6,8 @@ export interface Property {
     title: string;
     description: string;
     address: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
     price_per_night: number;
     rooms: number;
     bathrooms: number;
