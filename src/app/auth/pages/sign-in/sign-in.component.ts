@@ -33,21 +33,20 @@ export class SignInComponent {
 
     let userName = this.signInForm.value.userName || '';
     let password = this.signInForm.value.password || '';
-    let response = this.userService.login(userName, password);
 
-    if (response.success) {
-      if (response.is_owner) {
+    this.userService.login(userName, password).subscribe({
+      next: () => {
         this.router.navigateByUrl('/owner-filtering');
-      } else {
-        this.router.navigateByUrl('/user');
+      },
+      error: error => {
+        Swal.fire({
+          title: 'Ingreso',
+          text: error.error.message,
+          icon: 'error'
+        });
       }
-    } else {
-      Swal.fire({
-        title: 'Ingreso',
-        text: response.message,
-        icon: 'error'
-      });
-    }
+    });
+
   }
 
   navigateToSignUp() {

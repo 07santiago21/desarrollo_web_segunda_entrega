@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import Swal from 'sweetalert2';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, HttpClientModule],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
@@ -44,24 +45,21 @@ export class SignUpComponent {
     let profile_picture = this.signUpForm.value.profile_picture || '';
     let bio = this.signUpForm.value.bio || '';
     let is_owner = this.signUpForm.value.is_owner || false;
+    console.log(is_owner);
 
 
-    let response = this.userService.register({user_id, username, email, password, profile_picture, bio, is_owner})
-    if(response.success){
-      if (response.is_owner){
-        this.router.navigateByUrl('/owner-filtering');
-      }
-      else{
 
-        this.router.navigateByUrl('/user');
-      }
-    }else{
-      Swal.fire({
-        text: response.message,
+    this.userService.register({user_id, username, email, password, profile_picture, bio, is_owner}).subscribe({
+      next: () => this.goToUrl('/owner-filtering'),
+      error: error => Swal.fire({
+        text: error.error.message,
         icon: 'error'
       })
-    }
+    })
+
   }
+
+
 
   goToUrl(url: string) {
     this.router.navigateByUrl(url);

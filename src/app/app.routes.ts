@@ -8,6 +8,7 @@ import { OwnerFilteringComponent } from './features/owner-filtering/pages/owner-
 import { AddPropertyComponent } from './features/properties/add-property/add-property.component';
 import { PropertyEditComponent } from './features/properties/property-edit/property-edit.component';
 import { DetailsComponent } from './features/properties/details/details.component';
+import { UserReservationsComponent } from './features/properties/user-reservations/user-reservations.component';
 
 export const routes: Routes = [
     {path: 'user', component: HomeComponent },
@@ -19,4 +20,5 @@ export const routes: Routes = [
     {path: 'add-property', component: AddPropertyComponent},
     {path: 'edit-property/:id', component: PropertyEditComponent},
     {path: 'details/:id', component: DetailsComponent},
+    {path: 'user-reservations', component:UserReservationsComponent}
   ];

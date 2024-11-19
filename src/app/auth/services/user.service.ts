@@ -4,7 +4,12 @@ import { Signal } from '@angular/core';
 import { User } from '../interfaces/user';
 import { LoginResponse, SignUpResponse } from '../interfaces/auth_response';
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { SafeSubscriber } from 'rxjs/internal/Subscriber';
+import { UserResponse } from '../interfaces/user-response';
+import { jwtDecode } from 'jwt-decode';
+
 
 
 
@@ -12,6 +17,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+
+  constructor(private http:HttpClient){}
 
   private loggedInSubject = new BehaviorSubject<boolean>(false); 
   private ownerSubject = new BehaviorSubject<boolean>(false); 
@@ -26,64 +33,45 @@ export class UserService {
   isOwner = false; 
   Swal: any;
 
-  login(userName: string, password: string): LoginResponse{
-    const usuarios: Array<User> = JSON.parse(localStorage.getItem("users")|| "[]")
-
-    if (!(usuarios.length === 0)){
-
-        const existe = usuarios.find(item => item.username === userName  && item.password === password)
-        if(existe){
-          this.setUser(existe);
-          
-          this.logged_user(existe.is_owner)
-          
-          console.log('Signal updated:', this.userSignal());
-          
-          return {
-            success: true,
-            is_owner:existe.is_owner
-            
-          }
-
-        }
-
+  login(userName: string, password: string): Observable<LoginResponse>{
+    const body = {
+      "username": userName,
+      "password": password
     }
-    
-    return {
-      success: false,
-      message: 'Usuario o contraseña incorrectos'
-    }    
+
+    return this.http.post<UserResponse>('http://localhost:3000/user/login', body).pipe(
+      tap(response =>{
+        console.log('hola');
+        const decodedToken = jwtDecode(response.token) as User;
+        console.log(decodedToken);
+        this.setUser(decodedToken);
+        sessionStorage.setItem('token', response.token);
+      }),
+      map(() => {return {success:true}})
+    );
 
   }
 
-  register(user:User): SignUpResponse{
-    let usersArray = localStorage.getItem('users');
-    let users: Array<User> = usersArray ? JSON.parse(usersArray): [];
-
-    let existe = users.find(item => item.username.toLowerCase() === user.username.toLowerCase());
-
-    if(existe){
-      return {
-        success: false,
-        message: 'Usuario ya existe'
-      }
+  register(user:User): Observable<SignUpResponse>{
+    const body = {
+      "username": user.username,
+      "email": user.email,
+      "password": user.password,
+      "profile_picture": user.profile_picture,
+      "bio": user.bio,
+      "is_owner": user.is_owner
     }
-
-    
-
-    users.push(user);
-    localStorage.setItem('users', JSON.stringify(users));
-
-    this.setUser(user);
-
-    this.logged_user(user.is_owner)
-
-    return {
-      success: true,
-      is_owner: user.is_owner
-    };
+    return this.http.post<UserResponse>('http://localhost:3000/user', body).pipe(
+      tap(response=>{
+        this.setUser(user);
+        console.log(response.token);
+        sessionStorage.setItem('token', response.token);
+      }),
+      map(()=>{return {success:true}})
+    )
 
   }
+    
 
   private setUser(user:User){
     localStorage.setItem('loggedUser', JSON.stringify(user));
@@ -132,7 +120,8 @@ export class UserService {
     this.removeUser();
 
     this.loggedInSubject.next(false); // Notifica que el usuario ha cerrado sesión
-    this.ownerSubject.next(false); // Notifica que el usuario no es propietario
+    this.ownerSubject.next(false);
+    sessionStorage.clear(); // Notifica que el usuario no es propietario
     
   }
 
